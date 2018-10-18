@@ -39,7 +39,7 @@ def compose_query(endpoints):
 
   return ("{}{}{}").format(limit, time_query, bbox_query)  
 
-def save_collection(features, collection):
+def save_collection(features, collection, collection_title):
   global count
   collection.create_index([('properties.observed', pymongo.ASCENDING)], unique=False)
   collection.create_index([('geometry.coordinates', pymongo.ASCENDING)], unique=False)
@@ -51,8 +51,8 @@ def save_collection(features, collection):
     feature["updated"] = parser.parse(feature["updated"])
     collection.update({ "_id": feature["id"] }, feature, upsert = True)
 
-  
   count += len(features)
+  print(("from collection {} imported {} features").format(collection_title, count))
 
 
 query = compose_query(stats_endpoint_request)
@@ -71,7 +71,7 @@ def download_collection(collection_name, collection_title):
       count = 0
       break
     
-    save_collection(analytics_json["features"], collection)
+    save_collection(analytics_json["features"], collection, collection_title)
 
     analytics_json = session.get(analytics_json["links"][0]['href']).json()
 
