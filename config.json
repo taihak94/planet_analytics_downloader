@@ -1,0 +1,12 @@
+{
+  "stats_endpoint_request": {
+  	"limit" : 10000,
+    "time": {
+      "observed": {
+        "start": "2018-10-01T07:42:35Z",
+        "end": "2018-10-10T07:42:35Z"
+      }
+    },
+    "bbox": {}
+  }
+}
